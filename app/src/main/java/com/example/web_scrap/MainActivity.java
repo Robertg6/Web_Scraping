@@ -57,13 +57,15 @@ public class MainActivity extends AppCompatActivity {
         @Override
         protected Void doInBackground(Void... voids) {
             try{
-                String url = "https://firebase.google.com/";
+                String url = "https://www.sportsnet.ca/feed/";
                 Document doc = Jsoup.connect(url).get();
-                Element content = doc.select("img").first();
-                String imgsrc = content.absUrl("src");
-                InputStream input = new java.net.URL(imgsrc).openStream();
-                bitmap = BitmapFactory.decodeStream(input);
-                String title = doc.title();
+                //Element content = doc.select("img").first();
+                //String imgsrc = content.absUrl("src");
+                //InputStream input = new java.net.URL(imgsrc).openStream();
+                //bitmap = BitmapFactory.decodeStream(input);
+                Element el = doc.select("item").first();
+
+                String title = el.text();
                 text = title;
 
             }catch(IOException e){
