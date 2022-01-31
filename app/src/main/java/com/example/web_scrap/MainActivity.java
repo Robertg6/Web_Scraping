@@ -7,6 +7,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Xml;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -16,9 +17,12 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+import org.xmlpull.v1.XmlPullParser;
+import org.xmlpull.v1.XmlPullParserException;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URL;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -32,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         text_view = findViewById(R.id.textview);
-        button = findViewById(R.id.btnView);
+        button = findViewById(R.id.btnview);
         image = findViewById(R.id.image);
 
         button.setOnClickListener(new View.OnClickListener() {
@@ -57,18 +61,50 @@ public class MainActivity extends AppCompatActivity {
         @Override
         protected Void doInBackground(Void... voids) {
             try{
-                String url = "https://www.sportsnet.ca/feed/";
-                Document doc = Jsoup.connect(url).get();
+                String urls = "https://www.sportsnet.ca/feed/";
+                Document doc = Jsoup.connect(urls).get();
                 //Element content = doc.select("img").first();
                 //String imgsrc = content.absUrl("src");
                 //InputStream input = new java.net.URL(imgsrc).openStream();
                 //bitmap = BitmapFactory.decodeStream(input);
-                Element el = doc.select("item").first();
+                URL url = new URL(urls);
+                InputStream inputStream = url.openConnection().getInputStream();
 
-                String title = el.text();
-                text = title;
+                XmlPullParser xmlPullParser = Xml.newPullParser();
+                xmlPullParser.setFeature(XmlPullParser.FEATURE_PROCESS_NAMESPACES,false);
+                xmlPullParser.setInput(inputStream,null);
 
-            }catch(IOException e){
+
+                String content = "";
+                int i = 0;
+                int eventType = xmlPullParser.getEventType();
+                while (eventType != XmlPullParser.END_DOCUMENT){
+                    String tagname = xmlPullParser.getName();
+                    switch(eventType){
+                        case XmlPullParser.START_TAG:
+                            if (tagname.equalsIgnoreCase("title")){
+                                i = 1;
+                            }
+                        break;
+                        case XmlPullParser.TEXT:
+                            if(i == 1){
+                            content = content + xmlPullParser.getText() + "\n";
+                            i = 0;}
+                            break;
+                        case XmlPullParser.END_TAG:
+                            break;
+
+
+                    }
+                    eventType = xmlPullParser.next();
+                    }
+
+
+                XmlPullParser xml_pull = Xml.newPullParser();
+                text = content;
+
+
+            }catch(IOException | XmlPullParserException e){
                 e.printStackTrace();
             }
             return null;
@@ -77,7 +113,7 @@ public class MainActivity extends AppCompatActivity {
         protected void onPostExecute(Void aVoid){
             super.onPostExecute(aVoid);
             text_view.setText(text);
-            image.setImageBitmap(bitmap);
+
             progressDialog.dismiss();
         }
 
