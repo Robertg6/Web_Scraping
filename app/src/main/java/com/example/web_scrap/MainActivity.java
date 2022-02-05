@@ -2,6 +2,8 @@ package com.example.web_scrap;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.ProgressDialog;
 import android.graphics.Bitmap;
@@ -30,16 +32,17 @@ import org.xmlpull.v1.XmlPullParserException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
+import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
-    TextView text_view;
+    RecyclerView list_view;
 
     ImageView image;
     FloatingActionButton refresh_btn;
     FloatingActionButton list_btn;
     FloatingActionButton add_btn;
-
+    public ArrayList<String> article_array;
 
 
 
@@ -47,8 +50,20 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        article_array = new ArrayList<>();
 
-        text_view = findViewById(R.id.textview);
+        //new doIT().execute();
+
+        list_view = findViewById(R.id.article_list);
+
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getApplicationContext());
+        list_view.setLayoutManager(linearLayoutManager);
+        //  call the constructor of CustomAdapter to send the reference and data to Adapter
+        CustomAdapter customAdapter;
+        customAdapter = new CustomAdapter(MainActivity.this, article_array);
+        list_view.setAdapter(customAdapter); // set the Adapter to RecyclerView
+
+
         refresh_btn = findViewById(R.id.refresh);
         list_btn = findViewById(R.id.pub_list);
         add_btn = findViewById(R.id.add_pub);
@@ -57,7 +72,11 @@ public class MainActivity extends AppCompatActivity {
         refresh_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                customAdapter.notifyDataSetChanged();
                 new doIT().execute();
+                customAdapter.notifyDataSetChanged();
+
+
             }
         });
 
@@ -76,6 +95,8 @@ public class MainActivity extends AppCompatActivity {
                 inflate_adder();
             }
         });
+
+
 
 
     }
@@ -145,7 +166,9 @@ public class MainActivity extends AppCompatActivity {
                         break;
                         case XmlPullParser.TEXT:
                             if(i == 1){
-                            content = content + xmlPullParser.getText() + "\n";
+                            content = xmlPullParser.getText();
+                            article_array.add(content);
+
                             i = 0;}
                             break;
                         case XmlPullParser.END_TAG:
@@ -169,10 +192,11 @@ public class MainActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(Void aVoid){
             super.onPostExecute(aVoid);
-            text_view.setText(text);
+
 
             progressDialog.dismiss();
         }
 
     }
+
 }
