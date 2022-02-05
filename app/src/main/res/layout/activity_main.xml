@@ -8,7 +8,7 @@
 
     <TextView
         android:id="@+id/textview"
-        android:layout_width="wrap_content"
+        android:layout_width="331dp"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_alignParentBottom="true"
@@ -16,11 +16,11 @@
         android:layout_marginStart="30dp"
         android:layout_marginTop="30dp"
         android:layout_marginEnd="30dp"
-        android:layout_marginBottom="661dp"
+        android:layout_marginBottom="113dp"
         android:textSize="30dp" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/floatingActionButton2"
+        android:id="@+id/add_pub"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
@@ -28,15 +28,15 @@
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
         android:layout_marginStart="291dp"
-        android:layout_marginTop="621dp"
+        android:layout_marginTop="640dp"
         android:layout_marginEnd="64dp"
-        android:layout_marginBottom="54dp"
+        android:layout_marginBottom="55dp"
         android:clickable="true"
         app:backgroundTint="#00D48A"
         app:srcCompat="@drawable/add_button" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/floatingActionButton3"
+        android:id="@+id/refresh"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
@@ -45,14 +45,15 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginStart="178dp"
-        android:layout_marginTop="621dp"
+        android:layout_marginTop="640dp"
         android:layout_marginEnd="177dp"
-        android:layout_marginBottom="54dp"
+        android:layout_marginBottom="55dp"
         android:clickable="true"
+        app:backgroundTint="#00D48A"
         app:srcCompat="@android:drawable/ic_popup_sync" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/floatingActionButton4"
+        android:id="@+id/pub_list"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
@@ -60,10 +61,11 @@
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
         android:layout_marginStart="64dp"
-        android:layout_marginTop="620dp"
+        android:layout_marginTop="640dp"
         android:layout_marginEnd="291dp"
         android:layout_marginBottom="55dp"
         android:clickable="true"
+        app:backgroundTint="#00D48A"
         app:srcCompat="@android:drawable/ic_menu_sort_by_size" />
 
 
