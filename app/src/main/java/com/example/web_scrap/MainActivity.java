@@ -76,7 +76,6 @@ public class MainActivity extends AppCompatActivity {
                 new doIT().execute();
                 customAdapter.notifyDataSetChanged();
 
-
             }
         });
 
