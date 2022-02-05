@@ -1,5 +1,6 @@
 package com.example.web_scrap;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.ProgressDialog;
@@ -8,11 +9,14 @@ import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Xml;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -30,10 +34,14 @@ import java.net.URL;
 public class MainActivity extends AppCompatActivity {
 
     TextView text_view;
-    Button button;
+
     ImageView image;
-    FloatingActionButton btn;
-    ImageButton btn2;
+    FloatingActionButton refresh_btn;
+    FloatingActionButton list_btn;
+    FloatingActionButton add_btn;
+
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,14 +49,60 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         text_view = findViewById(R.id.textview);
-        btn = findViewById(R.id.refresh);
-        btn.setOnClickListener(new View.OnClickListener() {
+        refresh_btn = findViewById(R.id.refresh);
+        list_btn = findViewById(R.id.pub_list);
+        add_btn = findViewById(R.id.add_pub);
+
+        //On click listener for refresh button
+        refresh_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 new doIT().execute();
             }
         });
 
+        //On click listener for publication list button
+        list_btn.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view){
+
+            }
+        });
+
+        //On click listener for the add publication button
+        add_btn.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view){
+                inflate_adder();
+            }
+        });
+
+
+    }
+
+    private void inflate_adder(){
+        //setting up url adder layout
+        AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+        View view2 = LayoutInflater.from(MainActivity.this).inflate(R.layout.url_adder, null);
+
+        //inflating url adder layout
+        builder.setView(view2);
+        AlertDialog dialog = builder.show();
+
+        //initializing value of edit text and btn
+        Button url_adder_btn = (Button) view2.findViewById(R.id.adder_button);
+        EditText url_adder_edtx = (EditText) view2.findViewById(R.id.url_adder_edit);
+
+        url_adder_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //Toast message to let the user know the rss feed was added
+                Toast toast = Toast.makeText(MainActivity.this, "RSS feed added", Toast.LENGTH_LONG);
+                toast.show();
+                dialog.dismiss();
+
+            }
+        });
     }
 
     public class doIT extends AsyncTask<Void,Void,Void> {
