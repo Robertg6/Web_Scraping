@@ -10,8 +10,11 @@ import android.os.Bundle;
 import android.util.Xml;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -29,6 +32,8 @@ public class MainActivity extends AppCompatActivity {
     TextView text_view;
     Button button;
     ImageView image;
+    FloatingActionButton btn;
+    ImageButton btn2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,10 +41,10 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         text_view = findViewById(R.id.textview);
-        button = findViewById(R.id.btnview);
         image = findViewById(R.id.image);
-
-        button.setOnClickListener(new View.OnClickListener() {
+        //btn = findViewById(R.id.floatingActionButton);
+        btn2 = findViewById(R.id.imageButton);
+        btn2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 new doIT().execute();

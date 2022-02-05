@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Web_Scrap</string>
+    <string name="url_adder_hint">URL of website</string>
+    <string name="url_adder_button">Add website</string>
 </resources>
