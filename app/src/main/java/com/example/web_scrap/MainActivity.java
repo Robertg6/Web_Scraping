@@ -1,11 +1,15 @@
 package com.example.web_scrap;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
+import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
@@ -13,6 +17,7 @@ import android.os.Bundle;
 import android.util.Xml;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -48,11 +53,12 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        getSupportActionBar().hide();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         article_array = new ArrayList<>();
 
-        //new doIT().execute();
+
 
         list_view = findViewById(R.id.article_list);
 
@@ -68,11 +74,16 @@ public class MainActivity extends AppCompatActivity {
         list_btn = findViewById(R.id.pub_list);
         add_btn = findViewById(R.id.add_pub);
 
+        new doIT().execute();
+
+        //customAdapter.notifyDataSetChanged();
+        customAdapter.notifyDataSetChanged();
         //On click listener for refresh button
         refresh_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                customAdapter.notifyDataSetChanged();
+
+
                 new doIT().execute();
                 customAdapter.notifyDataSetChanged();
 
@@ -151,6 +162,11 @@ public class MainActivity extends AppCompatActivity {
                 xmlPullParser.setFeature(XmlPullParser.FEATURE_PROCESS_NAMESPACES,false);
                 xmlPullParser.setInput(inputStream,null);
 
+                //removes all elements from the current article array
+                while(article_array.isEmpty() == false){
+                    article_array.remove(0);
+                }
+
 
                 String content = "";
                 int i = 0;
@@ -197,5 +213,58 @@ public class MainActivity extends AppCompatActivity {
         }
 
     }
+    public class CustomAdapter extends RecyclerView.Adapter<com.example.web_scrap.MainActivity.MyViewHolder> {
+        ArrayList article_array;
+        Context context;
+
+
+        public CustomAdapter(Context context, ArrayList personNames) {
+            this.context = context;
+            this.article_array = personNames;
+        }
+        @Override
+        public com.example.web_scrap.MainActivity.MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+            // infalte the item Layout
+            View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.article_row_layout, parent, false);
+            // set the view's size, margins, paddings and layout parameters
+            com.example.web_scrap.MainActivity.MyViewHolder vh = new com.example.web_scrap.MainActivity.MyViewHolder(v); // pass the view to View Holder
+            return vh;
+        }
+
+
+
+        @Override
+        public void onBindViewHolder(com.example.web_scrap.MainActivity.MyViewHolder holder, @SuppressLint("RecyclerView") int position) {
+            holder.headline.setText((CharSequence) article_array.get(position));
+            holder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    // send the article name to the view article activity to display it
+                    Intent i = new Intent(MainActivity.this ,view_article.class);
+                    i.putExtra("Article_title", article_array.get(position).toString());
+                    startActivity(i);
+
+                }
+            });
+
+        }
+
+        @Override
+        public int getItemCount() {
+            return article_array.size();
+
+        }
+
+
+    }
+    public class MyViewHolder extends RecyclerView.ViewHolder {
+        TextView headline;// init the item view's
+        public MyViewHolder(View itemView) {
+            super(itemView);
+            // get the reference of item view's
+            headline = (TextView) itemView.findViewById(R.id.headline);
+        }
+    }
+
 
 }
