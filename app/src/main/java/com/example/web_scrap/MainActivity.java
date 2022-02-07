@@ -94,6 +94,8 @@ public class MainActivity extends AppCompatActivity {
         list_btn.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
+                Intent i = new Intent(MainActivity.this ,Pub_list.class);
+                startActivity(i);
 
             }
         });
@@ -149,7 +151,7 @@ public class MainActivity extends AppCompatActivity {
         @Override
         protected Void doInBackground(Void... voids) {
             try{
-                String urls = "https://www.sportsnet.ca/feed/";
+                String urls = "https://feeds.howtogeek.com/howtogeek";
                 Document doc = Jsoup.connect(urls).get();
                 //Element content = doc.select("img").first();
                 //String imgsrc = content.absUrl("src");

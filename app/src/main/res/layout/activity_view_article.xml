@@ -23,9 +23,9 @@
         android:id="@+id/article_title"
         android:layout_width="296dp"
         android:layout_height="49dp"
-        android:textColor="@color/black"
-        android:textSize="25dp"
         android:text="TextView"
+        android:textColor="@color/black"
+        android:textSize="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.79"
@@ -35,19 +35,20 @@
 
     <TextView
         android:id="@+id/article_body"
-        android:layout_width="380dp"
-        android:layout_height="611dp"
-        android:textColor="@color/black"
+        android:layout_width="407dp"
+        android:layout_height="742dp"
+        android:layout_marginTop="44dp"
         android:ems="10"
         android:gravity="start|top"
-        android:scrollbars="horizontal"
         android:linksClickable="true"
+        android:scrollbars="horizontal"
+
+        android:textColor="@color/black"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/article_title"
         tools:ignore="MissingConstraints"
-
-        tools:text = "null"/>
+        tools:text="null" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

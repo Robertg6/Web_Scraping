@@ -12,6 +12,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Web_Scrap">
         <activity
+            android:name=".Pub_list"
+            android:exported="false" />
+        <activity
             android:name=".view_article"
             android:exported="false" />
         <activity

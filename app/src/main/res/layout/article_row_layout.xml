@@ -8,9 +8,11 @@
     -->
     <TextView
         android:id="@+id/headline"
-        android:layout_width="385dp"
-        android:layout_height="wrap_content"
+        android:layout_width="395dp"
+        android:layout_height="74dp"
         android:layout_margin="10dp"
         android:textColor="#121212"
-        android:textSize="20sp" />
+        android:textSize="20sp"
+        android:outlineAmbientShadowColor="@color/black"
+        android:outlineSpotShadowColor="@color/black"/>
 </LinearLayout>
